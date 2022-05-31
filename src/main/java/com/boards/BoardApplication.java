@@ -13,7 +13,7 @@ public class BoardApplication {
 
 
     public static void main(String[] args) throws IOException, TimeoutException {
-        		SpringApplication.run(BoardApplication.class, args);
+        		SpringApplication.run(BoardApplication`.class, args);
 
     }
 
