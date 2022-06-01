@@ -12,11 +12,11 @@ import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
 
 public class AddCollaborator implements Command {
-    ObjectId user_ID;
+    String user_ID;
     ObjectId board_ID;
 
     public AddCollaborator(String string, String boardID) {
-        this.user_ID = new ObjectId(string);
+        this.user_ID = string;
         this.board_ID = new ObjectId(boardID);
     }
 

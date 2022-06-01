@@ -14,9 +14,9 @@ public class MongoDB {
     }
 
     public MongoCollection dbInit(String collectionName){
-        String uri = "mongodb://rootuser:rootpass@localhost:27017";
+        String uri = "mongodb://localhost:27017";
         MongoClient mongoClient = MongoClients.create(uri);
-        MongoDatabase database = mongoClient.getDatabase("List");
+        MongoDatabase database = mongoClient.getDatabase("Board");
         MongoCollection collection = database.getCollection(collectionName);
         return collection;
     }

@@ -41,7 +41,7 @@ public class EditTask implements Command {
         // handel if it is null
 
         if (taskName != null) {
-            Bson update1 = Updates.set("task_name", taskName);
+            Bson update1 = Updates.set("name", taskName);
             taskCollection.updateOne(filter, update1);
 
         }

@@ -10,12 +10,11 @@ import com.mongodb.client.result.InsertOneResult;
 
 import org.bson.conversions.Bson;
 
-public class BoardSearch implements Command {
+public class TaskSearch implements Command{
+    String task_name;
 
-    String board_name;
-
-    public BoardSearch(String boardName) {
-        this.board_name = boardName;
+    public TaskSearch(String taskName) {
+        this.task_name = taskName;
 
     }
 
@@ -23,15 +22,14 @@ public class BoardSearch implements Command {
     public FindIterable execute() {
 
         MongoDB db = new MongoDB();
-        MongoCollection boardCollection = db.dbInit(CollectionNames.BOARD.get());
+        MongoCollection boardCollection = db.dbInit(CollectionNames.TASK.get());
 
         // Inserting task in todolist
-        Bson filter = Filters.eq("name", this.board_name);
+        Bson filter = Filters.eq("name", this.task_name);
         // Bson projection = Projections.include("name");
         // System.out.println("Projections: "+filter);
         FindIterable result = boardCollection.find(filter);
         return result;
 
     }
-
 }
