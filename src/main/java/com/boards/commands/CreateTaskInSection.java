@@ -26,12 +26,12 @@ public class CreateTaskInSection implements Command {
 
         //Inserting task
         Document task = new Document("name", this.task_name);
-        InsertOneResult result = taskCollection.insertOne(task);
+        InsertOneResult res = taskCollection.insertOne(task);
 
         //Inserting task in board
         Bson filter = Filters.eq("_id", this.section_ID);
-        Bson update = Updates.push("tasks", result.getInsertedId().asObjectId());
-        sectionCollection.findOneAndUpdate(filter, update);
-        return result;
+        Bson update = Updates.push("tasks", res.getInsertedId().asObjectId());
+       sectionCollection.findOneAndUpdate(filter, update);
+        return res;
     }
 }

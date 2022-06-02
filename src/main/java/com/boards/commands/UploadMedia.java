@@ -8,6 +8,8 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Updates;
 import com.mongodb.client.result.InsertOneResult;
+import com.mongodb.internal.operation.FindAndUpdateOperation;
+
 import org.bson.BsonBinarySubType;
 import org.bson.Document;
 import org.bson.conversions.Bson;
@@ -23,12 +25,13 @@ public class UploadMedia {
         this.board_id = new ObjectId(boardID); 
     }
 
-    public void execute() {
+    public FindAndUpdateOperation execute() {
         MongoDB db = new MongoDB();
         MongoCollection boardCollection =  db.dbInit(CollectionNames.BOARD.get());
         MongoCollection commentCollection = db.dbInit(CollectionNames.PHOTO.get());
 
 
+        
         Document image = new Document("content", this.img);
         InsertOneResult result = commentCollection.insertOne(img);
 
@@ -36,7 +39,8 @@ public class UploadMedia {
         Bson filter = Filters.eq("_id", this.board_id);
 
         Bson update = Updates.push("comments", result.getInsertedId().asObjectId());
-        boardCollection.findOneAndUpdate(filter, update);
+        FindAndUpdateOperation res =  (FindAndUpdateOperation) boardCollection.findOneAndUpdate(filter, update);
+       return res;
     }
  
 }

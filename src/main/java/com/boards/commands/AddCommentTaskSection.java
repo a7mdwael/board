@@ -21,7 +21,7 @@ public class AddCommentTaskSection implements Command{
 
     }
 
-    public InsertOneResult  execute() {
+    public String execute() {
         MongoDB db = new MongoDB();
         MongoCollection taskCollection =  db.dbInit(CollectionNames.TASK.get());
         MongoCollection commentCollection = db.dbInit(CollectionNames.COMMENT.get());
@@ -34,8 +34,8 @@ public class AddCommentTaskSection implements Command{
         Bson filter = Filters.eq("_id", this.task_ID);
 
         Bson update = Updates.push("comments", result.getInsertedId().asObjectId());
-        taskCollection.findOneAndUpdate(filter, update);
-        return result;
+        Document res = (Document)  taskCollection.findOneAndUpdate(filter, update);
+        return res.toJson();
     }
 
 }

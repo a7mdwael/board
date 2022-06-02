@@ -9,6 +9,7 @@ import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Updates;
 import com.mongodb.client.result.DeleteResult;
 
+import org.bson.Document;
 import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
 
@@ -31,7 +32,7 @@ public class DeleteSection implements Command {
         DeleteResult result = sectionCollection.deleteOne(query);
         Bson filter = Filters.eq("_id", this.board_ID);
         Bson update = Updates.pull("sections", this.section_ID);
-        sectionCollection.findOneAndUpdate(filter, update);
+        boardCollection.findOneAndUpdate(filter, update);
         return result;
     }
 

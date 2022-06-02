@@ -13,14 +13,14 @@ import org.bson.Document;
 import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
 
-public class DeleteTaskFromSection implements Command {
+public class DeleteTaskFromBoard implements Command {
 
     ObjectId task_ID;
-    ObjectId section_ID;
+    ObjectId board_ID;
 
-    public DeleteTaskFromSection(String taskID, String sectionID) {
+    public DeleteTaskFromBoard(String taskID, String boardID) {
         this.task_ID = new ObjectId(taskID);
-        this.section_ID = new ObjectId(sectionID);
+        this.board_ID = new ObjectId(boardID);
     }
 
     public DeleteResult execute() {
@@ -31,9 +31,9 @@ public class DeleteTaskFromSection implements Command {
         Bson query = Filters.eq("_id", this.task_ID);
         DeleteResult result = taskCollection.deleteOne(query);
 
-        Bson filter = Filters.eq("_id", this.section_ID);
+        Bson filter = Filters.eq("_id", this.board_ID);
         Bson update = Updates.pull("tasks", this.task_ID);
-        sectionCollection.findOneAndUpdate(filter, update);
+       sectionCollection.findOneAndUpdate(filter, update);
 
         return result;
     }
