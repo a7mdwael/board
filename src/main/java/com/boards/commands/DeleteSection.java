@@ -31,7 +31,7 @@ public class DeleteSection implements Command {
         DeleteResult result = sectionCollection.deleteOne(query);
         Bson filter = Filters.eq("_id", this.board_ID);
         Bson update = Updates.pull("sections", this.section_ID);
-        sectionCollection.findOneAndUpdate(filter, update);
+        boardCollection.findOneAndUpdate(filter, update);
         return result;
     }
 

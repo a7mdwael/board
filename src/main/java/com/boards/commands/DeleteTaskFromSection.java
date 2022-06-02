@@ -30,17 +30,10 @@ public class DeleteTaskFromSection implements Command {
         Bson query = Filters.eq("_id", this.task_ID);
         DeleteResult result = taskCollection.deleteOne(query);
 
-        // //Delete Task
-        // sectionCollection.deleteOne(Filters.eq("task_id", task_ID));
-        // taskCollection.deleteOne(Filters.eq("task_id", task_ID));
-
         Bson filter = Filters.eq("_id", this.section_ID);
         Bson update = Updates.pull("tasks", this.task_ID);
         sectionCollection.findOneAndUpdate(filter, update);
-        // Deleting task from board
-        // Bson filter = Filters.eq("section_id", this.section_ID);
-        // Bson update = Updates.pull("tasks", this.task_ID);
-        // sectionCollection.findOneAndUpdate(filter, update);
+
         return result;
     }
 
