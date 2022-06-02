@@ -60,11 +60,11 @@ public class CreateSection implements Command {
     //     EditTask CreateTask = new EditTask("6297a6a805881c2ccfd617c4","not first task","", x,true);
     //     InsertOneResult result1 = CreateTask.execute();
 
-        TaskSearch serachboard = new TaskSearch("first task");
-        FindIterable result = serachboard.execute();
-        for (Object object : result) {
-        System.out.println(object.toString());
-        }
+        // TaskSearch serachboard = new TaskSearch("first task");
+        // FindIterable result = serachboard.execute();
+        // for (Object object : result) {
+        // System.out.println(object.toString());
+        // }
     
         
         // DeadlineTask serachboard = new DeadlineTask();
