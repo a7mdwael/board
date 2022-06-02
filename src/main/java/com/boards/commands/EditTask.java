@@ -8,6 +8,7 @@ import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Updates;
 import com.mongodb.client.result.InsertOneResult;
 
+import org.bson.Document;
 import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
 
@@ -30,7 +31,7 @@ public class EditTask implements Command {
     }
 
     @Override
-    public InsertOneResult execute() {
+    public String execute() {
 
         MongoDB db = new MongoDB();
         MongoCollection taskCollection = db.dbInit(CollectionNames.TASK.get());
@@ -61,7 +62,9 @@ public class EditTask implements Command {
 
         // Updates.combine(),
 
-        return null;
+        Document result = (Document) taskCollection.find(filter);
+        return result.toJson();
+
 
     }
 }

@@ -21,21 +21,21 @@ public class AddCommentBoard implements Command{
 
     }
 
-    public InsertOneResult  execute() {
+    public String  execute() {
         MongoDB db = new MongoDB();
         MongoCollection boardCollection =  db.dbInit(CollectionNames.BOARD.get());
         MongoCollection commentCollection = db.dbInit(CollectionNames.COMMENT.get());
 
 
         Document comment = new Document("content", this.content);
-        InsertOneResult result = commentCollection.insertOne(comment);
+        InsertOneResult res = commentCollection.insertOne(comment);
 
 
         Bson filter = Filters.eq("_id", this.boardID);
 
-        Bson update = Updates.push("comments", result.getInsertedId().asObjectId());
-        boardCollection.findOneAndUpdate(filter, update);
-        return result;
+        Bson update = Updates.push("comments", res.getInsertedId().asObjectId());
+        Document result = (Document) boardCollection.findOneAndUpdate(filter, update);
+        return result.toJson();
     }
 
 }

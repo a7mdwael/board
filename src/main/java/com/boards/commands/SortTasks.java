@@ -9,6 +9,8 @@ import com.mongodb.client.result.InsertOneResult;
 import com.mongodb.client.FindIterable;
 
 import com.mongodb.client.model.Filters;
+
+import org.bson.Document;
 import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
 
@@ -26,25 +28,26 @@ public class SortTasks implements Command {
     }
 
     @Override
-    public InsertOneResult execute() {
+    public String execute() {
 
         MongoDB db = new MongoDB();
-        MongoCollection SectionCollection = db.dbInit(CollectionNames.SECTION.get());
-        MongoCollection TaskCollection = db.dbInit(CollectionNames.TASK.get());
+        MongoCollection sectionCOllection = db.dbInit(CollectionNames.SECTION.get());
+        MongoCollection taskCollection = db.dbInit(CollectionNames.TASK.get());
         Bson filter = Filters.eq("_id", this.sectionID);
 
-        if (order.equals("asec")) {
-        FindIterable sortedTasks = TaskCollection.find().sort(Sorts.ascending(sort));
-        } else {
-        FindIterable sortedTasks = TaskCollection.find().sort(Sorts.descending(sort));
+        Document result = (Document) taskCollection.find();
+
+        if(order=="asc") {
+            result = (Document) taskCollection.find().sort(Sorts.ascending(sort));
         }
-    //    foreach(x in sortedTasks){
 
-    //    }
+    if(order=="desc") {
+       result = (Document) taskCollection.find().sort(Sorts.descending(sort));
+        }
 
-        return null;
 
-        // todolistCollection.find(filter).forEach(doc -> System.out.println(doc));
+    return result.toJson();
 
+        
     }
 }

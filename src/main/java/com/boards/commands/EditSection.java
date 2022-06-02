@@ -8,6 +8,7 @@ import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Updates;
 import com.mongodb.client.result.InsertOneResult;
 
+import org.bson.Document;
 import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
 
@@ -23,10 +24,10 @@ public class EditSection implements Command {
     }
 
     @Override
-    public InsertOneResult execute() {
+    public String execute() {
 
         MongoDB db = new MongoDB();
-        MongoCollection taskCollection = db.dbInit(CollectionNames.TASK.get());
+        MongoCollection sectionCollection = db.dbInit(CollectionNames.SECTION.get());
 
         // Inserting task in todolist
         Bson filter = Filters.eq("_id", this.section_ID);
@@ -35,15 +36,14 @@ public class EditSection implements Command {
 
         if (sectionName != null) {
             Bson update1 = Updates.set("name", sectionName);
-            taskCollection.updateOne(filter, update1);
+            sectionCollection.updateOne(filter, update1);
 
         }
 
 
 
-        // Updates.combine(),
-
-        return null;
+        Document result = (Document) sectionCollection.find(filter);
+        return result.toJson();
 
     }
     

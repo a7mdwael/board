@@ -77,11 +77,13 @@ public class CreateSection implements Command {
         // AssignTask CreateTask1 = new AssignTask("6298d27fde27fb73125cc03a","salma");
         // Object result1 = CreateTask1.execute();
 
-        // DeleteTaskFromSection CreateTask1 = new DeleteTaskFromSection("6298d1a6e0702d0bdb12076c","6297a61af000916519b07da8");
-        // Object result1 = CreateTask1.execute();
+        DeleteTaskFromBoard CreateTask1 = new DeleteTaskFromBoard("6298e07975352a72f726f72d","6297a1a561279967af4413dc");
+        Object result1 = CreateTask1.execute();
 
         // SortTasks SortTasks = new SortTasks("6297a1a561279967af4413dc","6297a8676cbac86cf70767c3");
         // InsertOneResult result2 = SortTasks.execute();
+
+     //   UploadMedia upload = new UploadMedia("index.jpg", "6297a1a561279967af4413dc")
 
     }
 }

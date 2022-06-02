@@ -23,12 +23,12 @@ public class AssignTask implements Command{
     }
 
 
-    public Object execute() {
+    public String execute() {
         MongoDB db = new MongoDB();
         MongoCollection taskCollection = db.dbInit(CollectionNames.TASK.get());
         Bson filter = Filters.eq("_id", taskID);
         Bson update = Updates.push("assignee", assignee);
-        Object result = taskCollection.findOneAndUpdate(filter, update);
-        return result;
+        Document result = (Document) taskCollection.findOneAndUpdate(filter, update);
+        return result.toJson();
     }
 }

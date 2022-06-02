@@ -7,6 +7,7 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Sorts;
 import com.mongodb.client.result.InsertOneResult;
 
+import org.bson.Document;
 import org.bson.types.ObjectId;
 
 public class SortSections implements Command {
@@ -27,21 +28,25 @@ public class SortSections implements Command {
 
 
     @Override
-    public InsertOneResult  execute() {
+    public String  execute() {
 
         MongoDB db = new MongoDB();
         MongoCollection taskCollection = db.dbInit(CollectionNames.SECTION.get());
 
 
-            if(order=="asc") {
-                taskCollection.find().sort(Sorts.ascending(sort));
-            }
-            else{
-                taskCollection.find().sort(Sorts.descending(sort));
-            }
-            return null;
+        Document result = (Document) taskCollection.find();
 
-//       todolistCollection.find(filter).forEach(doc -> System.out.println(doc));
+        if(order=="asc") {
+            result = (Document) taskCollection.find().sort(Sorts.ascending(sort));
+        }
+
+    
+       if(order=="desc") {
+            result = (Document) taskCollection.find().sort(Sorts.descending(sort));
+        }
+
+
+    return result.toJson();
 
 
     }

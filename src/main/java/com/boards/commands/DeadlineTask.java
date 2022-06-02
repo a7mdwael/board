@@ -6,6 +6,8 @@ import com.mongodb.client.model.Filters;
 import com.mongodb.client.result.InsertOneResult;
 import com.boards.config.MongoDB;
 import com.boards.constants.CollectionNames;
+
+import org.bson.Document;
 import org.bson.conversions.Bson;
 import com.mongodb.client.FindIterable;
 
@@ -27,7 +29,7 @@ public class DeadlineTask implements Command{
 
 
     @Override
-    public FindIterable execute() {
+    public String execute() {
 
         MongoDB db = new MongoDB();
         MongoCollection boardCollection =  db.dbInit(CollectionNames.BOARD.get());
@@ -35,12 +37,12 @@ public class DeadlineTask implements Command{
 
 
         Bson filter = Filters.gt("due_date",LocalDate.now());
-        FindIterable result = taskCollection.find(filter);
+        Document result = (Document) taskCollection.find(filter);
         System.out.println(result);
 //       todolistCollection.find(filter).forEach(doc -> System.out.println(doc));
 
 
-        return result;
+        return result.toJson();
     }
 
 

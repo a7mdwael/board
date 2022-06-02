@@ -21,11 +21,11 @@ public class CreateBoard implements Command {
         this.creators.add(userId);
     }
 
-    public InsertOneResult  execute() {
+    public InsertOneResult execute() {
         MongoDB db = new MongoDB();
         MongoCollection collection =  db.dbInit(CollectionNames.BOARD.get());
         Document board = new Document("name", this.board_name).append("creator", this.user_Id).append("collaborators", this.creators);
-        InsertOneResult result =  collection.insertOne(board);
+        InsertOneResult  result = collection.insertOne(board);
         return result; 
     
     }
